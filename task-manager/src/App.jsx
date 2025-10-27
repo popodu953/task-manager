@@ -115,6 +115,7 @@ function App() {
         </Route>
 
         <Route path='/log-in' element={<Login />} />
+        <Route path='/sign-in' element={<Navigate to='/log-in' replace />} />
       </Routes>
 
       <Toaster richColors />

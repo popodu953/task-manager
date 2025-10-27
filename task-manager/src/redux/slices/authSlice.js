@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { act } from "react";
 
 const initialState = {
     user: (() => {
@@ -16,6 +15,7 @@ const initialState = {
           return null;
         }
       })(),
+    isSidebarOpen: false,
 };
 
 const authSlice = createSlice ({
