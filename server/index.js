@@ -17,15 +17,28 @@ const app = express();
 
 app.use(
   cors({
-    origin: [
-      "http://localhost:3000", 
-      "http://localhost:3001", 
-      "https://revolttasks.netlify.app",
-      "https://revolttasks.netlify.app/"
-    ],
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like mobile apps or curl requests)
+      if (!origin) return callback(null, true);
+      
+      const allowedOrigins = [
+        "http://localhost:3000", 
+        "http://localhost:3001", 
+        "https://revolttasks.netlify.app",
+        "https://revolttasks.netlify.app/"
+      ];
+      
+      if (allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        console.log('CORS blocked origin:', origin);
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     methods: ["GET", "POST", "DELETE", "PUT", "OPTIONS"],
     credentials: true,
-    allowedHeaders: ["Content-Type", "Authorization", "Cookie"],
+    allowedHeaders: ["Content-Type", "Authorization", "Cookie", "X-Requested-With"],
+    exposedHeaders: ["Set-Cookie"],
   })
 );
 
@@ -33,6 +46,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(cookieParser());
+
+// Handle preflight requests manually
+app.options('*', (req, res) => {
+  res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Cookie, X-Requested-With');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.sendStatus(200);
+});
 
 app.use(morgan("dev"));
 
