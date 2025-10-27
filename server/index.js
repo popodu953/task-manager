@@ -29,6 +29,23 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use(morgan("dev"));
+
+// Health check routes for Render deployment
+app.get("/", (req, res) => {
+  res.status(200).json({
+    status: true,
+    message: "Task Manager API Server is running",
+    timestamp: new Date().toISOString()
+  });
+});
+
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    status: "healthy",
+    timestamp: new Date().toISOString()
+  });
+});
+
 app.use("/api", routes);
 
 app.use(routeNotFound);
