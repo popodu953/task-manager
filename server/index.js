@@ -17,7 +17,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "https://revolttasks.netlify.app",
+    origin: "https://revoltasks.netlify.app",
     methods: ["GET", "POST", "DELETE", "PUT", "OPTIONS"],
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization", "Cookie", "X-Requested-With"],
