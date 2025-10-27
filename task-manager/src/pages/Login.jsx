@@ -35,10 +35,16 @@ const Login = () => {
       if (isLogin) {
         result = await login(data);
         console.log("Login result:", result); // Debug log
+        console.log("Result.data:", result.data); // Debug log
+        console.log("Result.error:", result.error); // Debug log
+        
         if (result.data) {
           dispatch(setCredentials(result.data));
           toast.success("Login successful!");
+          console.log("User dispatched, navigating..."); // Debug log
           navigate("/");
+        } else if (result.error) {
+          toast.error(result.error.data?.message || "Login failed");
         } else {
           toast.error("Login failed - no data received");
         }

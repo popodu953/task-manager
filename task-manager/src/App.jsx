@@ -21,7 +21,8 @@ function Layout() {
   const location = useLocation();
   // const bypass = import.meta.env.VITE_BYPASS_AUTH === 'true';
 
-  
+  console.log("Layout - Current user:", user); // Debug log
+  console.log("Layout - Current location:", location.pathname); // Debug log
 
   return user ? (
     <div className='w-full h-screen flex flex-col md:flex-row'>
