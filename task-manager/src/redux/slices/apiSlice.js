@@ -1,10 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-// Use localhost for local development
-const API_URI = import.meta.env.VITE_APP_BASE_URL || "http://localhost:8800";
+// Use localhost for local development, Render URL for production
+const API_URI = import.meta.env.VITE_APP_BASE_URL || 
+  (import.meta.env.PROD ? "https://task-manager-kmy6.onrender.com" : "http://localhost:8800");
 
 console.log("API_URI:", API_URI); // Debug log
 console.log("Environment variables:", import.meta.env); // Debug log
+console.log("Is Production:", import.meta.env.PROD); // Debug log
 
 const baseQuery = fetchBaseQuery({
   baseUrl: API_URI + "/api",
