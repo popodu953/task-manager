@@ -5,9 +5,14 @@ const initialState = {
     user: (() => {
         try {
           const userInfo = localStorage.getItem('userInfo');
-          return userInfo ? JSON.parse(userInfo) : null;
+          if (!userInfo || userInfo === 'undefined' || userInfo === 'null') {
+            localStorage.removeItem('userInfo');
+            return null;
+          }
+          return JSON.parse(userInfo);
         } catch (error) {
           console.error('Error parsing user info:', error);
+          localStorage.removeItem('userInfo');
           return null;
         }
       })(),

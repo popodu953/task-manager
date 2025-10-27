@@ -17,9 +17,15 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "http://localhost:3001", "https://revolttasks.netlify.app"],
-    methods: ["GET", "POST", "DELETE", "PUT"],
+    origin: [
+      "http://localhost:3000", 
+      "http://localhost:3001", 
+      "https://revolttasks.netlify.app",
+      "https://revolttasks.netlify.app/"
+    ],
+    methods: ["GET", "POST", "DELETE", "PUT", "OPTIONS"],
     credentials: true,
+    allowedHeaders: ["Content-Type", "Authorization", "Cookie"],
   })
 );
 
