@@ -17,24 +17,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: function (origin, callback) {
-      // Allow requests with no origin (like mobile apps or curl requests)
-      if (!origin) return callback(null, true);
-      
-      const allowedOrigins = [
-        "http://localhost:3000", 
-        "http://localhost:3001", 
-        "https://revolttasks.netlify.app",
-        "https://revolttasks.netlify.app/"
-      ];
-      
-      if (allowedOrigins.indexOf(origin) !== -1) {
-        callback(null, true);
-      } else {
-        console.log('CORS blocked origin:', origin);
-        callback(new Error('Not allowed by CORS'));
-      }
-    },
+    origin: "https://revolttasks.netlify.app",
     methods: ["GET", "POST", "DELETE", "PUT", "OPTIONS"],
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization", "Cookie", "X-Requested-With"],
