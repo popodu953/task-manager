@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 // Use the correct property name and add fallback
-const API_URI = import.meta.env.VITE_APP_BASE_URL || "http://localhost:5000";
+const API_URI = import.meta.env.VITE_APP_BASE_URL || "https://task-manager-kmy6.onrender.com";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: API_URI + "/api", // Changed from baseQuery to baseUrl
