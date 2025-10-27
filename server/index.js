@@ -47,15 +47,6 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(cookieParser());
 
-// Handle preflight requests manually
-app.options('*', (req, res) => {
-  res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Cookie, X-Requested-With');
-  res.header('Access-Control-Allow-Credentials', 'true');
-  res.sendStatus(200);
-});
-
 app.use(morgan("dev"));
 
 // Health check routes for Render deployment
