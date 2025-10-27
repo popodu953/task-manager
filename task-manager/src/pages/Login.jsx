@@ -34,8 +34,14 @@ const Login = () => {
       
       if (isLogin) {
         result = await login(data);
-        dispatch(setCredentials(result.data));
-        navigate("/");
+        console.log("Login result:", result); // Debug log
+        if (result.data) {
+          dispatch(setCredentials(result.data));
+          toast.success("Login successful!");
+          navigate("/");
+        } else {
+          toast.error("Login failed - no data received");
+        }
       } else {
         result = await registerUser(data);
         toast.success("Registration successful! Please login.");
@@ -43,7 +49,7 @@ const Login = () => {
         reset();
       }
     } catch (error) {
-      console.log(error);
+      console.log("Login error:", error); // Debug log
       toast.error(error?.data?.message || (isLogin ? "Login failed" : "Registration failed"));
     }
   };
