@@ -97,6 +97,8 @@ const MobileSidebar = () => {
 };
 
 function App() {
+  console.log("App component rendering..."); // Debug log
+  
   return (
     <main className='w-full min-h-screen bg-[#f3f4f6] '>
       <Routes>
