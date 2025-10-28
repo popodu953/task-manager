@@ -38,18 +38,13 @@ const AddTask = ({ open, setOpen, refetch, task }) => {
   // Initialize form with task data when editing
   useEffect(() => {
     if (task && open) {
-      console.log("=== EDITING TASK ===");
-      console.log("Task data:", task);
-      console.log("Task assets:", task.assets);
       setValue("title", task.title);
       setValue("date", task.date ? new Date(task.date).toISOString().split('T')[0] : "");
       setTeam(task.team || []);
       setStage(task.stage?.toUpperCase() || LISTS[0]);
       setPriority(task.priority?.toUpperCase() || PRIORITY[2]);
       setAssets(task.assets || []);
-      console.log("Assets set to:", task.assets || []);
     } else if (!task && open) {
-      console.log("=== CREATING NEW TASK ===");
       // Reset form for new task
       reset();
       setTeam([]);
@@ -86,8 +81,6 @@ const AddTask = ({ open, setOpen, refetch, task }) => {
         assets: processedAssets, // Send processed file info instead of File objects
       };
 
-      console.log(`${isEditMode ? 'Updating' : 'Creating'} task with data:`, taskData);
-
       let result;
       if (isEditMode) {
         result = await updateTask({ id: task._id, ...taskData });
@@ -111,7 +104,6 @@ const AddTask = ({ open, setOpen, refetch, task }) => {
         toast.error(result.data?.message || `Failed to ${isEditMode ? 'update' : 'create'} task`);
       }
     } catch (error) {
-      console.log(`${isEditMode ? 'Update' : 'Create'} task error:`, error);
       // Handle different error response formats
       const errorMessage = error?.data?.message || error?.message || `Failed to ${isEditMode ? 'update' : 'create'} task`;
       toast.error(errorMessage);
@@ -192,20 +184,6 @@ const AddTask = ({ open, setOpen, refetch, task }) => {
                 />
               </label>
             </div>
-          </div>
-
-          {/* Debug section - remove this later */}
-          <div className="text-xs text-gray-400 border p-2 rounded bg-gray-50">
-            <div className="font-medium">Debug Info:</div>
-            <div>Assets count: {assets.length}</div>
-            <div>Assets type: {Array.isArray(assets) ? 'Array' : typeof assets}</div>
-            {assets.length > 0 && (
-              <div>
-                <div>First asset type: {typeof assets[0]}</div>
-                <div>First asset name: {assets[0]?.name || 'No name'}</div>
-                <div>First asset size: {assets[0]?.size || 'No size'}</div>
-              </div>
-            )}
           </div>
 
           {assets.length > 0 && (
