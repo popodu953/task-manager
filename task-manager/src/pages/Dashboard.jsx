@@ -155,7 +155,7 @@ if (isLoading)
     </div>
     );
 
-  const totals = data?.tasks;
+  const totals = data?.tasks || {};
   const stats = [
     {
       _id: "1",
@@ -167,21 +167,21 @@ if (isLoading)
     {
       _id: "2",
       label: "COMPLTED TASK",
-      total: totals["completed"] || 0,
+      total: totals?.["completed"] || 0,
       icon: <MdAdminPanelSettings />,
       bg: "bg-[#0f766e]",
     },
     {
       _id: "3",
       label: "TASK IN PROGRESS ",
-      total: totals["in progress"] || 0,
+      total: totals?.["in progress"] || 0,
       icon: <LuClipboardPen />,
       bg: "bg-[#f59e0b]",
     },
     {
       _id: "4",
       label: "TODOS",
-      total: totals["todo"],
+      total: totals?.["todo"] || 0,
       icon: <FaArrowsToDot />,
       bg: "bg-[#be185d]",
     },

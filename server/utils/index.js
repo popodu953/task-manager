@@ -16,11 +16,14 @@ export const createJWT = (res, userId) => {
     expiresIn: "1d",
   });
 
-  // Change sameSite from strict to none when you deploy your app
+  // Use 'none' for sameSite in production (required for cross-origin cookies)
+  // Use 'strict' in development (prevents CSRF attack)
+  const isProduction = process.env.NODE_ENV === "production";
+  
   res.cookie("token", token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV !== "development",
-    sameSite: "strict", //prevent CSRF attack
+    secure: isProduction, // HTTPS only in production
+    sameSite: isProduction ? "none" : "strict",
     maxAge: 1 * 24 * 60 * 60 * 1000, //1 day
   });
 };
