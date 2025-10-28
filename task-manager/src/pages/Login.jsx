@@ -49,7 +49,12 @@ const Login = () => {
           toast.error("Login failed - no data received");
         }
       } else {
-        result = await registerUser(data);
+        // Ensure new users are not admins
+        const registrationData = {
+          ...data,
+          isAdmin: false
+        };
+        result = await registerUser(registrationData);
         toast.success("Registration successful! Please login.");
         setIsLogin(true);
         reset();
@@ -210,20 +215,6 @@ const Login = () => {
                   })}
                   error={errors.title ? errors.title.message : ""}
                 />
-              )}
-
-              {/* Admin checkbox - only for register */}
-              {!isLogin && (
-                <div className='flex items-center gap-2'>
-                  <input
-                    type='checkbox'
-                    {...register("isAdmin")}
-                    className='w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500'
-                  />
-                  <label className='text-sm text-gray-700'>
-                    Admin privileges (optional)
-                  </label>
-                </div>
               )}
 
               {/* Forgot Password - only for login */}
